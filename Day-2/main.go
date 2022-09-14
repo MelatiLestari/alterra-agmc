@@ -32,7 +32,7 @@ import (
 
 func init() {
 	config.InitDB()
-	// config.InitialMigration()
+	config.InitialMigration()
 }
 
 func main() {
