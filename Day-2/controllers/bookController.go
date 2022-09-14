@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"Day-2/models"
-
 	"github.com/labstack/echo/v4"
+
+	"Day-2/models"
 )
 
 var bookList = models.Books
@@ -84,14 +84,6 @@ func UpdateBookById(c echo.Context) error {
 		}
 		return c.JSON(http.StatusBadRequest, response)
 	}
-
-	// if len(bookPayload.ID) == 0 {
-	// 	response := map[string]interface{}{
-	// 		"message": "Request incomplete",
-	// 		"code":    http.StatusBadRequest,
-	// 	}
-	// 	return c.JSON(http.StatusBadRequest, response)
-	// }
 
 	for i, book := range bookList {
 		if book.ID == uint(id) {
