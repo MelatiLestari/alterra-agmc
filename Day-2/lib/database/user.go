@@ -24,8 +24,6 @@ func GetUserById(id uint) (models.User, error) {
 }
 
 func CreateNewUser(user models.User) error {
-	// fmt.Println("Masuk db", user)
-	// test := models.User{Email: "melati@falcon.com", Password: "1234"}
 	if err := config.DB.Create(&user).Error; err != nil {
 		return err
 	}
