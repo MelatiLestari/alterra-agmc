@@ -3,13 +3,15 @@ module Day-2
 go 1.19
 
 require (
+	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/echo/v4 v4.9.0
 	gorm.io/driver/postgres v1.3.9
 	gorm.io/gorm v1.23.8
 )
 
 require (
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.13.0 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect

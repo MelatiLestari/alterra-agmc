@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/labstack/echo/v4"
@@ -18,7 +19,13 @@ func New() *echo.Echo {
 	v1.POST("/login", controllers.LoginUsers)
 
 	v1Users := v1.Group("/users")
-	v1Users.Use(middleware.JWT([]byte(jwtSecret)))
+	v1Users.Use(middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningKey: []byte(os.Getenv("JWT_SECRET")),
+		Skipper: func(c echo.Context) bool {
+			fmt.Println("echo url", c.Request().Method)
+			return c.Request().Method == "POST"
+		},
+	}))
 	v1Users.GET("", controllers.GetAllUsers)
 	v1Users.GET("/:id", controllers.GetUserById)
 	v1Users.POST("", controllers.CreateNewUser)
@@ -26,7 +33,13 @@ func New() *echo.Echo {
 	v1Users.DELETE("/:id", controllers.DeleteUserById)
 
 	v1Books := v1.Group("/books")
-	v1Books.Use(middleware.JWT([]byte(jwtSecret)))
+	v1Books.Use(middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningKey: []byte(os.Getenv("JWT_SECRET")),
+		Skipper: func(c echo.Context) bool {
+			fmt.Println("echo url", c.Request().Method)
+			return c.Request().Method == "GET"
+		},
+	}))
 	v1Books.GET("", controllers.GetAllBooks)
 	v1Books.GET("/:id", controllers.GetBookById)
 	v1Books.POST("", controllers.CreateNewBook)
