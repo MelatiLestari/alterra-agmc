@@ -129,7 +129,6 @@ func TestDeleteBookById_BookFound(t *testing.T) {
 	c.SetParamValues("2")
 
 	if assert.NoError(t, DeleteBookById(c)) {
-		fmt.Println("isinya", rec.Body.String())
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.True(t, strings.Contains(rec.Body.String(), "{\"code\":200,\"message\":\"success\"}"))
 	}
@@ -145,7 +144,6 @@ func TestDeleteBookById_BookNotFound(t *testing.T) {
 	c.SetParamValues("5")
 
 	if assert.NoError(t, DeleteBookById(c)) {
-		fmt.Println("isinya", rec.Body.String())
 		assert.Equal(t, http.StatusBadRequest, rec.Code)
 		assert.True(t, strings.Contains(rec.Body.String(), "{\"code\":400,\"message\":\"failed to delete book\"}"))
 	}
