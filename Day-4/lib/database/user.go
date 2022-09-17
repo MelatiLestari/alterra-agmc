@@ -33,7 +33,10 @@ func CreateNewUser(user models.User) error {
 }
 
 func UpdateUserById(user models.User, id uint) error {
-	updatedUser, _ := GetUserById(id)
+	updatedUser, errGetUserById := GetUserById(id)
+	if errGetUserById != nil {
+		return errGetUserById
+	}
 	updatedUser.Password = user.Password
 	if err := config.DB.Save(&updatedUser).Error; err != nil {
 		return err

@@ -27,7 +27,6 @@ func GetAllUsers(c echo.Context) error {
 
 func GetUserById(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	fmt.Println("ID MASUK", id)
 	user, err := database.GetUserById(uint(id))
 
 	if err != nil {
@@ -69,7 +68,11 @@ func UpdateUserById(c echo.Context) error {
 
 	err := database.UpdateUserById(user, uint(id))
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+		response := map[string]interface{}{
+			"message": "Record not found",
+			"code":    http.StatusInternalServerError,
+		}
+		return c.JSON(http.StatusInternalServerError, response)
 	}
 
 	message := fmt.Sprintf("succesfully updated user with ID: %d", id)
@@ -82,7 +85,6 @@ func UpdateUserById(c echo.Context) error {
 
 func DeleteUserById(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-
 	err := database.DeleteUserById(uint(id))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
