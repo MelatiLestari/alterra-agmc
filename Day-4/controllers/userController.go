@@ -27,9 +27,15 @@ func GetAllUsers(c echo.Context) error {
 
 func GetUserById(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
+	fmt.Println("ID MASUK", id)
 	user, err := database.GetUserById(uint(id))
+
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+		response := map[string]interface{}{
+			"message": "Record not found",
+			"code":    http.StatusInternalServerError,
+		}
+		return c.JSON(http.StatusInternalServerError, response)
 	}
 
 	response := map[string]interface{}{
